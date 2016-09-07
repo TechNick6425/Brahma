@@ -42,9 +42,9 @@ void do_gshax_copy (void *dst, void *src, u32 len) {
 	s32 i = 0;
 
 	for (i = 0; i < 16; ++i) {
-		GSPGPU_FlushDataCache (NULL, src, len);
+		GSPGPU_FlushDataCache (src, len);
 		GX_SetTextureCopy(NULL, src, 0, dst, 0, len, 8);
-		GSPGPU_FlushDataCache (NULL, check_mem, 16);
+		GSPGPU_FlushDataCache (check_mem, 16);
 		GX_SetTextureCopy(NULL, src, 0, check_mem, 0, 0x40, 8);
 	}
 	HB_FlushInvalidateCache();
@@ -66,7 +66,7 @@ s32 get_exploit_data (struct exploit_data *data) {
 		return result;
 
 	fversion = osGetFirmVersion();
-	APT_CheckNew3DS(NULL, &isN3DS);
+	APT_CheckNew3DS(&isN3DS);
 	sysmodel = isN3DS ? SYS_MODEL_NEW_3DS : SYS_MODEL_OLD_3DS;
 
 	/* copy platform and firmware dependent data */
